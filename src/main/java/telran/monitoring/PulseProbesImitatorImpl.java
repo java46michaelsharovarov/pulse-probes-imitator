@@ -54,7 +54,7 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 	}
 
 	private void updatePatientPulses(long id) {
-		patientPulses.merge(id, generateRandomPulse(minPulse, maxPulse), (i, val) -> updatePulseValue(val));
+		patientPulses.compute(id, (k, v) -> v == null? generateRandomPulse(minPulse, maxPulse) : updatePulseValue(v));
 	}
 
 	private long generateRandomId(long minId, long maxId) {
