@@ -1,4 +1,4 @@
-package telran.monitoring;
+package telran.monitoring.service;
 
 import telran.monititoring.model.PulseProbe;
 

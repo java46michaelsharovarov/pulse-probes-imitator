@@ -1,16 +1,15 @@
-package telran.monitoring;
+package telran.monitoring.service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import telran.monititoring.model.PulseProbe;
 
-@Component
+@Service
 public class PulseProbesImitatorImpl implements PulseProbesImitator {
 
 	private static final int MIN_PROBABILITY = 0;
@@ -18,30 +17,30 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 	
 	Map<Long, Integer> patientPulses = new HashMap<>();
 	
-	private static AtomicInteger seqNumber = new AtomicInteger(1);
+	private static long seqNumber = 1;
 	
-	@Value("${app.patients.amount}")
+	@Value("${app.patients.amount:10}")
 	private int numberOfPatients;
 	
-	@Value("${app.patients.id.min}")
+	@Value("${app.patients.id.min:100000000}")
 	private long minId;
 	
-	@Value("${app.pulse.value.min}")
+	@Value("${app.pulse.value.min:70}")
 	private int minPulse;
 	
-	@Value("${app.pulse.value.max}")
+	@Value("${app.pulse.value.max:150}")
 	private int maxPulse;
 	
-	@Value("${app.jump.probability}")
+	@Value("${app.jump.probability:10}")
 	private int probabilityOfJump;
 	
-	@Value("${app.increas.probability}")
+	@Value("${app.increas.probability:70}")
 	private int probabilityOfIncrease;
 	
-	@Value("${app.jump.multiplier}")
+	@Value("${app.jump.multiplier:1.4}")
 	private double multiplierForJump;
 	
-	@Value("${app.no-jump.multiplier}")
+	@Value("${app.no-jump.multiplier:1.05}")
 	private double multiplierForNoJump;
 	
 	
@@ -50,7 +49,7 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 		long maxId = minId + numberOfPatients;
 		long id = generateRandomId(minId, maxId);
 		updatePatientPulses(id);
-		return new PulseProbe(id, System.currentTimeMillis(), seqNumber.getAndIncrement(), patientPulses.get(id));
+		return new PulseProbe(id, seqNumber++, patientPulses.get(id));
 	}
 
 	private void updatePatientPulses(long id) {
@@ -72,12 +71,12 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 		return (int) (isIncrease ? pulse * multiplier : pulse / multiplier);
 	}
 
-	private ThreadLocalRandom getRandom() {
-		return ThreadLocalRandom.current();
-	}
-
 	private boolean getRandomBoolean(int probability) {
 		return getRandom().nextInt(MIN_PROBABILITY, MAX_PROBABILITY + 1) <= probability;
+	}
+	
+	private ThreadLocalRandom getRandom() {
+		return ThreadLocalRandom.current();
 	}
 
 }

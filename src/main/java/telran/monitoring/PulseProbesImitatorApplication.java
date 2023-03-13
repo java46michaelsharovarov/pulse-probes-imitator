@@ -1,19 +1,28 @@
 package telran.monitoring;
 
-import java.util.stream.IntStream;
+import java.util.function.Supplier;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+
+import telran.monititoring.model.PulseProbe;
+import telran.monitoring.service.PulseProbesImitatorImpl;
 
 @SpringBootApplication
 public class PulseProbesImitatorApplication {
 
+	@Autowired
+	PulseProbesImitatorImpl imitator;
+	
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ac = SpringApplication.run(PulseProbesImitatorApplication.class, args);
-		PulseProbesImitatorImpl imitator = ac.getBean(PulseProbesImitatorImpl.class);
-		IntStream.range(0, 10)
-		.forEach(i -> System.out.println(imitator.nextProbe()));
+		SpringApplication.run(PulseProbesImitatorApplication.class, args);
+	}
+	
+	@Bean
+	Supplier<PulseProbe> pulseProbSupplier() {
+		return imitator::nextProbe;		
 	}
 
 }
