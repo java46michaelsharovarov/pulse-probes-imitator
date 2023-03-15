@@ -9,6 +9,7 @@ import org.springframework.cloud.stream.binder.test.OutputDestination;
 import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.messaging.Message;
+import org.springframework.test.context.TestPropertySource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,6 +17,7 @@ import telran.monititoring.model.PulseProbe;
 
 @SpringBootTest
 @Import(TestChannelBinderConfiguration.class)
+@TestPropertySource(properties = "spring.main.banner-mode=off")
 class PulseProbesImitatorApplicationTests {
 
 	@Autowired
