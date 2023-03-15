@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import telran.monititoring.model.PulseProbe;
+import telran.monitoring.model.PulseProbe;
 
 @Service
 public class PulseProbesImitatorImpl implements PulseProbesImitator {
