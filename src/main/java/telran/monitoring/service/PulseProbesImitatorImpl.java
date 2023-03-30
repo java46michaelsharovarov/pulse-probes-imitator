@@ -22,19 +22,19 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 	@Value("${app.patients.amount:10}")
 	private int numberOfPatients;
 	
-	@Value("${app.patients.id.min:100000000}")
+	@Value("${app.patients.id.min:200000000}")
 	private long minId;
 	
 	@Value("${app.pulse.value.min:70}")
 	private int minPulse;
 	
-	@Value("${app.pulse.value.max:150}")
+	@Value("${app.pulse.value.max:130}")
 	private int maxPulse;
 	
 	@Value("${app.jump.probability:10}")
 	private int probabilityOfJump;
 	
-	@Value("${app.increas.probability:70}")
+	@Value("${app.increas.probability:50}")
 	private int probabilityOfIncrease;
 	
 	@Value("${app.jump.multiplier:1.4}")
