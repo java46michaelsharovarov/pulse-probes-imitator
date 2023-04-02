@@ -22,15 +22,11 @@ class PulseProbesImitatorApplicationTests {
 
 	@Autowired
 	OutputDestination consumer;
-	
-	@Test
-	void contextLoads() {
-	}
-	
+		
 	@Test
 	void nextProbeTest() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 20; i++) {
 			Message<byte[]> message = consumer.receive(1100, "pulseProbSupplier-out-0");
 			assertNotNull(message);
 			System.out.println(mapper.readValue(message.getPayload(), PulseProbe.class));

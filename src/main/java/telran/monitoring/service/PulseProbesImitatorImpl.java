@@ -22,7 +22,7 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 	@Value("${app.patients.amount:10}")
 	private int numberOfPatients;
 	
-	@Value("${app.patients.id.min:200000000}")
+	@Value("${app.patients.id.min:1}")
 	private long minId;
 	
 	@Value("${app.pulse.value.min:70}")
@@ -57,7 +57,7 @@ public class PulseProbesImitatorImpl implements PulseProbesImitator {
 	}
 
 	private long generateRandomId(long minId, long maxId) {
-		return getRandom().nextLong(minId, maxId + 1);
+		return getRandom().nextLong(minId, maxId);
 	}
 
 	private int generateRandomPulse(int minPulse, int maxPulse) {
